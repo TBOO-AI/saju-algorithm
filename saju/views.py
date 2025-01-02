@@ -9,6 +9,7 @@ from saju.saju_algorithm.saju_core.saju import Saju
 
 module_dir = os.path.dirname(__file__)
 oheang_saju_file_path = os.path.join(module_dir, 'saju_data/oheang_saju.csv')
+il_ju_saju_file_path = os.path.join(module_dir, 'saju_data/il_ju_saju.csv')
 
 CHARACTER_DICT = [
     { "id": 1, "element": "수", "name_ko": "모빈", "name_en" : "MoVin", "for_me": 2, "to_me": 3, "il_gan": ["임", "계"]},
@@ -77,7 +78,8 @@ def character(request):
     oheang_rate = saju_dict["oheang_score"]
     most_oheang = [k for k, v in saju_dict["oheang_score"].items() if max(saju_dict["oheang_score"].values()) == v]
     il_gan = saju_dict["il_gan"]
-
+    il_ju = saju_dict["il_ju"]
+    print("il_ju", il_ju)
     character = next(
         (char for char in CHARACTER_DICT 
         if il_gan_dict[il_gan] in char["il_gan"]),
@@ -89,20 +91,30 @@ def character(request):
     
     # 캐릭터 사주를 가져온다.
     with open(oheang_saju_file_path, encoding='utf-8') as f:
-          rdr = csv.reader(f)
-          next(rdr)  # 헤더 행을 건너뜁니다
-          rdr = list(rdr)
+        reader = csv.DictReader(f)
+        rows = list(reader)
 
-          filtered_saju = next(
-               (row for row in rdr 
-               if int(row[1]) == character["id"] and row[2] == most_oheang[0]),
-               None
-          )
+        filtered_saju = next(
+            (row for row in rows 
+            if int(row['character']) == character["id"] and row['most_oheang'] == most_oheang[0]),
+            None
+        )
+
+       # 캐릭터 사주를 가져온다.
+    with open(il_ju_saju_file_path, encoding='utf-8') as f:
+        reader = csv.DictReader(f)
+        rows = list(reader)
+
+        filtered_il_ju = next(
+            (row for row in rows 
+            if row['il_ju'] == il_ju),
+            None
+        )
     
     if filtered_saju is None:
         return JsonResponse({"error": "일치하는 사주 데이터를 찾을 수 없습니다."}, status=404)
     
 
-    return JsonResponse({"character": character, "saju": filtered_saju, "oheang_rate": oheang_rate})
+    return JsonResponse({"character": character, "saju": filtered_saju, "il_ju": filtered_il_ju, "oheang_rate": oheang_rate})
 
 
