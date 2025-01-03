@@ -72,6 +72,7 @@ def character(request):
         sex=sex
     ).saju_me_action()
 
+    print(saju_dict)
     il_gan_dict = {"甲": "갑", "乙": "을", "丙": "병", "丁": "정", "戊": "무", "己": "기", "庚": "경", "辛": "신", "壬": "임",
                    "癸": "계"}
 
@@ -100,7 +101,7 @@ def character(request):
             None
         )
 
-       # 캐릭터 사주를 가져온다.
+    # 캐릭터 사주를 가져온다.
     with open(il_ju_saju_file_path, encoding='utf-8') as f:
         reader = csv.DictReader(f)
         rows = list(reader)

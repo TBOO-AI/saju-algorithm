@@ -276,7 +276,7 @@ class Saju():
             '己': ['申', '酉', '戌', '亥', '子', '丑', '寅', '卯', '辰', '巳', '午',  '未'],
             '庚': ['巳', '午', '未', '申', '酉', '戌', '亥', '子', '丑', '寅', '卯', '辰'],
             # '辛': ['子', '亥', '戌', '酉', '申', '未', '午', '巳', '辰', '卯', '寅', '丑'],
-            '辛': ['亥', '子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉'  '戌'],
+            '辛': ['亥', '子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌'],
             '壬': ['申', '酉', '戌', '亥', '子', '丑', '寅', '卯', '辰', '巳', '午', '未'],
             # '癸': ['卯', '寅', '丑', '子', '亥', '戌', '酉', '申', '未', '午', '巳', '辰'],
             '癸': ['寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥', '子', '丑'],
@@ -886,6 +886,7 @@ class Saju():
         n24terms = i * 2 + in_type
         out_terms24 = self.ca24TermsTable[n24terms]
 
+        print("n24terms", n24terms)
         j = i * 2 + in_type
         tmin = int(lMinCnt + (monthmin100 - self.naMonthTable[j]))
         y, mo, d, h, mi = self.getDate2Min(tmin, self.m_unityear, self.m_unitmonth, self.m_unitday, self.m_unithour, self.m_unitmin)
@@ -1941,10 +1942,10 @@ class Saju():
         else:  # 음년(0) 의 남자(1), 양년(1) 의 여자(2) 면 역행한다.
             bAscending = False
 
+
         PREV_24TERMS, terms24_1, prev_year, prev_month, prev_day, prev_hour, prev_min = self.get24terms(self.me_year, self.me_month, self.me_day, self.me_hour, self.me_min, self.PREV_24TERMS)
         MID_24TERMS, terms24_2, mid_year, mid_month, mid_day, mid_hour, mid_min = self.get24terms(self.me_year, self.me_month, self.me_day, self.me_hour, self.me_min, self.MID_24TERMS)
         NEXT_24TERMS, terms24_3, next_year, next_month, next_day, next_hour, next_min = self.get24terms(self.me_year, self.me_month, self.me_day, self.me_hour, self.me_min, self.NEXT_24TERMS)
-
         sDate = int(self.me_year * 10000 + self.me_month * 100 + self.me_day)
         prevDate = int(prev_year * 10000 + prev_month * 100 + prev_day)
         midDate = int(mid_year * 10000 + mid_month * 100 + mid_day)
@@ -2193,9 +2194,16 @@ class Saju():
         return daily_weather_dict
 
     def get_season(self, dae_won_ji):
+        print('@@@@@@ table_12 start @@@@@@')
+        print('@@@@@@ get_me_il_gan @@@@@@ : ', self.get_me_il_gan())
         array_12 = self.table_12[self.get_me_il_gan()]
+        print('@@@@@@ array_12 @@@@@@')
+        print('@@@@@@ array_12 @@@@@@ : ', array_12)
+        print('@@@@@@ dae_won_ji @@@@@@ : ', dae_won_ji)
         index = array_12.index(dae_won_ji)
+        print('@@@@@@ table_woonsung start @@@@@@')
         woonsung_12 = self.table_woonsung[index]
+        print('@@@@@@ index @@@@@@')
         season_dict = {
             "절": 11,
             "태": 12,
@@ -2283,9 +2291,14 @@ class Saju():
         else:
             generation = 9
         dea_won = dae_won_list[generation]
+        print('@@@@@@ dea_won @@@@@@ : ', dea_won)
+        print('@@@@@@ dae_won_list @@@@@@ : ', dae_won_list)
+        print('@@@@@@ get_season start @@@@@@')
         month, season = self.get_season(dea_won[1])
+        print('@@@@@@ get_season @@@@@@')
         generations = generations[generation:] + generations[:generation]
         dict = {}
+
         for idx, generation in enumerate(generations):
             if int(month) > 12:
                 month = 1
@@ -2325,46 +2338,47 @@ class Saju():
         return dae_won_flow
 
     def suju_index_list(self):
+        print('@@@@@@ Start @@@@@@')
         yeon_ju_idx, wol_ju_idx, il_ju_idx, si_ju_idx = self.makeGanji()
-
+        print('@@@@@@ makeGanji @@@@@@')
         now_yeon_ju_idx, now_wol_ju_idx, now_il_ju_idx, now_si_ju_idx = self.makeGanji(in_syear=self.now_year, in_smonth=self.now_month,
                                                                                        in_sday=self.now_day, in_shour=self.now_hour,
                                                                                        in_smin=self.now_min)
-
+        print('@@@@@@ makeGanji2 @@@@@@')
         # now_yeon_ju_idx, now_wol_ju_idx, now_il_ju_idx, now_si_ju_idx = self.makeGanji(in_syear=2021, in_smonth=12,
         #                                                                                    in_sday=22, in_shour=15,
         #                                                                                    in_smin=31)
 
         # 대운
         dae_won_dict = self.get_dae_won()
+        print('@@@@@@ get_dae_won @@@@@@')
         dae_won_idx = self.caGanjiTable.index(dae_won_dict["dae_won"])
-
         # 연주, 월주, 일주, 시주
-        _10sin_year = self.get_10sin("year", yeon_ju_idx)
+        # _10sin_year = self.get_10sin("year", yeon_ju_idx)
         # print("년주", sum(_10sin_year.values()))
 
-        _10sin_month = self.get_10sin("month", wol_ju_idx)
+        # _10sin_month = self.get_10sin("month", wol_ju_idx)
         # print("월주", sum(_10sin_month.values()))
 
-        _10sin_day = self.get_10sin("day", il_ju_idx)
+        # _10sin_day = self.get_10sin("day", il_ju_idx)
         # print("일주", sum(_10sin_day.values()))
 
-        _10sin_time = self.get_10sin("time", si_ju_idx)
+        # _10sin_time = self.get_10sin("time", si_ju_idx)
         # print("시주", sum(_10sin_time.values()))
 
-        _10sin_dae_won = self.get_10sin("big_luck", dae_won_idx)
+        # _10sin_dae_won = self.get_10sin("big_luck", dae_won_idx)
         # print("대운", _10sin_dae_won)
 
-        _10sin_year_luck = self.get_10sin("year_luck", now_yeon_ju_idx)
+        # _10sin_year_luck = self.get_10sin("year_luck", now_yeon_ju_idx)
         # print("세운", sum(_10sin_year_luck.values()))
 
-        _10sin_month_luck = self.get_10sin("month_luck", now_wol_ju_idx)
+        # _10sin_month_luck = self.get_10sin("month_luck", now_wol_ju_idx)
         # print("월운", sum(_10sin_month_luck.values()))
 
-        _10sin_day_luck = self.get_10sin("day_luck", now_il_ju_idx)
+        # _10sin_day_luck = self.get_10sin("day_luck", now_il_ju_idx)
         # print("일운", sum(_10sin_day_luck.values()))
 
-        _10sin_time_luck = self.get_10sin("time_luck", now_si_ju_idx)
+        # _10sin_time_luck = self.get_10sin("time_luck", now_si_ju_idx)
         # print("시운", sum(_10sin_time_luck.values()))
 
         _10sin_idx_list = [
