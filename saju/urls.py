@@ -1,10 +1,9 @@
 # example/urls.py
 from django.urls import path
 
-from saju.views import index, character
+from saju.views import saju
 
 
 urlpatterns = [
-    path('me', index),
-    path('character', character),
+    path('', saju),
 ]

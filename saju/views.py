@@ -1,6 +1,6 @@
-# example/views.py
+
 from datetime import datetime
-from django.http import JsonResponse  # 상단에 import 추가
+from django.http import JsonResponse
 import os
 import csv
 from saju.saju_algorithm.saju_core.saju import Saju
@@ -18,46 +18,29 @@ CHARACTER_DICT = [
     { "id": 5, "element": "목", "name_ko": "유피", "name_en" : "YuPEE", "for_me": 1, "to_me": 2, "il_gan": ["갑", "을"]},
 ]
 
-def index(request):
+def saju(request):
+    birth_date = request.GET.get('birth_date')
+    birth_time = request.GET.get('birth_time')
+    gender = request.GET.get('gender')
 
-    saju = Saju(in_year=int(1995), in_month=int(2), in_day=int(25), in_hour=int(10),
-         in_min=int(0),
-         sex=int(1))
-
-    my_saju = saju.saju_me()
-    print(my_saju)
-
-    return JsonResponse(my_saju)
-
-
-def character(request):
-
-    # 날짜, 시간, 성별 데이터 받기
-    birth_date = request.GET.get('birth_date')  # "1995-02-25" 형식
-    birth_time = request.GET.get('birth_time')  # "10:00" 형식
-    gender = request.GET.get('gender')  # "male" 또는 "female"
-
-     # 필수 값 검사
     if not all([birth_date, birth_time, gender]):
         return JsonResponse({
-            "error": "필수 파라미터가 누락되었습니다. (birth_date, birth_time, gender)"
+            "error": "Required parameters are missing. (birth_date, birth_time, gender)"
         }, status=400)
 
-    # 성별 값 검사
     if gender.lower() not in ['male', 'female']:
         return JsonResponse({
-            "error": "성별은 'male' 또는 'female'이어야 합니다."
+            "error": "Gender must be either 'male' or 'female'."
         }, status=400)
     
     try:
-        # 날짜와 시간 파싱
+
         birth_datetime = datetime.strptime(f"{birth_date} {birth_time}", "%Y-%m-%d %H:%M")
     except ValueError:
         return JsonResponse({
-            "error": "날짜/시간 형식이 올바르지 않습니다. (YYYY-MM-DD HH:MM)"
+            "error": "Invalid date/time format. (YYYY-MM-DD HH:MM)"
         }, status=400)
     
-    # 성별 변환 (male=1, female=2)
     sex = 1 if gender.lower() == 'male' else 2
 
     saju_dict = Saju(
@@ -84,7 +67,7 @@ def character(request):
     )
 
     if character is None:
-        return JsonResponse({"error": "일치하는 캐릭터를 찾을 수 없습니다."}, status=404)
+        return JsonResponse({"error": "No matching character found."}, status=404)
     
     with open(oheang_saju_file_path, encoding='utf-8') as f:
         reader = csv.DictReader(f)
@@ -107,10 +90,20 @@ def character(request):
         )
     
     if filtered_saju is None:
-        return JsonResponse({"error": "일치하는 사주 데이터를 찾을 수 없습니다."}, status=404)
+        return JsonResponse({"error": "No matching Saju data found."}, status=404)
     
 
-    print(saju_dict)
-    return JsonResponse({"character": character, "saju": filtered_saju, "il_ju": filtered_il_ju, "oheang_rate": oheang_rate, "luck_score": saju_dict["luck_score"], "saju_score": saju_dict["saju_score"], "dae_won_su": saju_dict["dae_won_su"]})
+    return JsonResponse({
+        "status": "success",
+        "data": {
+            "character": character,
+            "saju": filtered_saju, 
+            "il_ju": filtered_il_ju, 
+            "oheang_rate": oheang_rate, 
+            "luck_score": saju_dict["luck_score"], 
+            "saju_score": saju_dict["saju_score"], 
+            "dae_won_su": saju_dict["dae_won_su"]
+        }
+    })
 
 

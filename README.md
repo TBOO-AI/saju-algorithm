@@ -1,106 +1,116 @@
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fexamples%2Ftree%2Fmain%2Fpython%2Fdjango&demo-title=Django%20%2B%20Vercel&demo-description=Use%20Django%204%20on%20Vercel%20with%20Serverless%20Functions%20using%20the%20Python%20Runtime.&demo-url=https%3A%2F%2Fdjango-template.vercel.app%2F&demo-image=https://assets.vercel.com/image/upload/v1669994241/random/django.png)
+# TBOO - AI-based Asian Fortune Telling 🍀
 
-# Django + Vercel
+TBOO.AI is a consumer-centric decentralized application (DApp) that combines traditional Asian fortune-telling with AI technology to facilitate the transition from Web2 to Web3.
 
-This example shows how to use Django 4 on Vercel with Serverless Functions using the [Python Runtime](https://vercel.com/docs/concepts/functions/serverless-functions/runtimes/python).
+## What is Saju (Four Pillars)?
 
-## Demo
+Saju is a destiny interpretation system based on Oriental philosophy, composed of four pillars representing the year, month, day, and time of birth. Each pillar consists of a combination of Heavenly Stems (天干) and Earthly Branches (地支), which are used to analyze an individual's innate personality and flow of destiny.
 
-https://django-template.vercel.app/
+## TBOO API Usage Guide
 
-## How it Works
+### API Endpoint
 
-Our Django application, `example` is configured as an installed application in `api/settings.py`:
-
-```python
-# api/settings.py
-INSTALLED_APPS = [
-    # ...
-    'example',
-]
+```bash
+GET http://localhost:8000/api/saju/
 ```
 
-We allow "\*.vercel.app" subdomains in `ALLOWED_HOSTS`, in addition to 127.0.0.1:
-
-```python
-# api/settings.py
-ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app']
+### Request Headers
+```
+Content-Type: application/json
+x-api-key: your_api_key
 ```
 
-The `wsgi` module must use a public variable named `app` to expose the WSGI application:
+### Request Parameters
 
-```python
-# api/wsgi.py
-app = get_wsgi_application()
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| birthdate | string | Required | Date of birth (YYYY-MM-DD) |
+| birthtime | string | Required | Time of birth (HH:mm) |
+| gender | string | Required | Gender (male/female) |
+
+### Request Example
+
+```bash
+curl -X GET "http://localhost:8000/api/saju/?birthdate=1990-01-01&birthtime=12:00&gender=male" \
+  -H "Content-Type: application/json" \
+  -H "x-api-key: your_api_key" \
+  -d '{
+    "status": "success",
+    "data": {
+      "character": { ... },
+      "saju": { ... },
+      "il_ju": { ... },
+      "oheang_rate": { ... },
+      "luck_score": { ... },
+      "saju_score": { ... },
+      "dae_won_su": 9
+    }
+  }'
 ```
 
-The corresponding `WSGI_APPLICATION` setting is configured to use the `app` variable from the `api.wsgi` module:
+### Response Format
 
-```python
-# api/settings.py
-WSGI_APPLICATION = 'api.wsgi.app'
+```json
+{
+  "status": "success",
+  "data": {
+    "character": { ... },
+    "saju": { ... },
+    "il_ju": { ... },
+    "oheang_rate": {
+        "ground": 33.2,
+        "fire": 15.9,
+        "water": 6.8,
+        "wood": 32.7,
+        "gold": 11.4
+    },
+    "luck_score": {
+        "love": 44,
+        "wealth": 62,
+        "study": 72,
+        "health": 13
+    },
+    "saju_score": {
+        "sang-gwan": 8.5,
+        "ski-sin": 5.5,
+        "jeong-jae": 16.0,
+        "pyeon-jae": 3.5,
+        "jeong-gwan": 11.2,
+        "pyeon-gwan": 22.3,
+        "jeong-in": 13.1,
+        "pyeon-in": 14.0,
+        "geop-jae": 0.0,
+        "bi-gyeon": 6.0
+    },
+    "dae_won_su": 9
+  }
+}
 ```
 
-There is a single view which renders the current time in `example/views.py`:
-
-```python
-# example/views.py
-from datetime import datetime
-
-from django.http import HttpResponse
-
-
-def index(request):
-    now = datetime.now()
-    html = f'''
-    <html>
-        <body>
-            <h1>Hello from Vercel!</h1>
-            <p>The current time is { now }.</p>
-        </body>
-    </html>
-    '''
-    return HttpResponse(html)
-```
-
-This view is exposed a URL through `example/urls.py`:
-
-```python
-# example/urls.py
-from django.urls import path
-
-from example.views import index
-
-
-urlpatterns = [
-    path('', index),
-]
-```
-
-Finally, it's made accessible to the Django server inside `api/urls.py`:
-
-```python
-# api/urls.py
-from django.urls import path, include
-
-urlpatterns = [
-    ...
-    path('', include('example.urls')),
-]
-```
-
-This example uses the Web Server Gateway Interface (WSGI) with Django to enable handling requests on Vercel with Serverless Functions.
+- `character`
+    - Contains character information, representing the Day Pillar (일주) information from the Saju.
+- `saju`
+    - Contains information about personality traits based on your character and dominant elements.
+- `il_ju`
+    - Contains interpretation of your Day Pillar.
+- `oheang_rate`
+    - Contains the ratio of the Five Elements in your entire Saju, consisting of ground, fire, water, wood, and gold.
+- `luck_score`
+    - Contains fortune scores in four categories: love, wealth, study, and health.
+- `saju_score`
+    - Contains Saju scores in ten categories: Sang-gwan, Sik-sin, Jeong-jae, Pyeon-jae, Jeong-gwan, Pyeon-gwan, Jeong-in, Pyeon-in, Geop-jae, and Bi-gyeon.
+- `dae_won_su`
+    - Contains your Major Number (대원수), which is determined by the combination of Heavenly Stems and Earthly Branches in your Saju.
 
 ## Running Locally
 
 ```bash
+pip install -r requirements.txt
 python manage.py runserver
 ```
 
-Your Django application is now available at `http://localhost:8000`.
+Once the server is running, you can test the API at `http://localhost:8000`.
 
-## One-Click Deploy
+## License
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=vercel-examples):
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fexamples%2Ftree%2Fmain%2Fpython%2Fdjango&demo-title=Django%20%2B%20Vercel&demo-description=Use%20Django%204%20on%20Vercel%20with%20Serverless%20Functions%20using%20the%20Python%20Runtime.&demo-url=https%3A%2F%2Fdjango-template.vercel.app%2F&demo-image=https://assets.vercel.com/image/upload/v1669994241/random/django.png)
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
