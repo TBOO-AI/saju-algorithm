@@ -2,7 +2,7 @@
 
 TBOO.AI is a consumer-centric decentralized application (DApp) that combines traditional Asian fortune-telling with AI technology to facilitate the transition from Web2 to Web3.
 
-## What is Saju (Four Pillars)?
+## What is Saju (Four Pillars of Destiny)?
 
 Saju is a destiny interpretation system based on Oriental philosophy, composed of four pillars representing the year, month, day, and time of birth. Each pillar consists of a combination of Heavenly Stems (天干) and Earthly Branches (地支), which are used to analyze an individual's innate personality and flow of destiny.
 
