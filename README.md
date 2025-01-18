@@ -17,7 +17,7 @@ GET http://localhost:8000/api/saju/
 ### Request Headers
 ```
 Content-Type: application/json
-x-api-key: your_api_key
+X-API-KEY: your_api_key
 ```
 
 ### Request Parameters
@@ -33,7 +33,7 @@ x-api-key: your_api_key
 ```bash
 curl -X GET "http://localhost:8000/api/saju/?birthdate=1990-01-01&birthtime=12:00&gender=male" \
   -H "Content-Type: application/json" \
-  -H "x-api-key: your_api_key" \
+  -H "X-API-KEY: your_api_key" \
   -d '{
     "status": "success",
     "data": {
