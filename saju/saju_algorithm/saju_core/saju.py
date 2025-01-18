@@ -524,11 +524,11 @@ class Saju():
         _10sin_score = dict(
             zip(total_10sin_only_saju_score.keys(), map(lambda x: round((x[1] / 110) * 100, 1), total_10sin_only_saju_score.items())))
         _6chin_score = {
-            "인성": round(_10sin_score["편인"] + _10sin_score["정인"], 1),
-            "비겁": round(_10sin_score["비견"] + _10sin_score["겁재"], 1),
-            "식상": round(_10sin_score["식신"] + _10sin_score["상관"], 1),
-            "재성": round(_10sin_score["편재"] + _10sin_score["정재"], 1),
-            "관성": round(_10sin_score["편관"] + _10sin_score["정관"], 1),
+            "인성": round(_10sin_score["pyeon-in"] + _10sin_score["jeong-in"], 1),
+            "비겁": round(_10sin_score["bi-gyeon"] + _10sin_score["geop-jae"], 1),
+            "식상": round(_10sin_score["ski-sin"] + _10sin_score["sang-gwan"], 1),
+            "재성": round(_10sin_score["pyeon-jae"] + _10sin_score["jeong-jae"], 1),
+            "관성": round(_10sin_score["pyeon-gwan"] + _10sin_score["jeong-gwan"], 1),
         }
         _5heng_score = self.oheng_table[self.get_me_il_gan()]
         result_mapper = {"목": "wood", "화": "fire", "토": "ground", "금": "gold", "수": "water"}
@@ -723,16 +723,16 @@ class Saju():
 
     def get_10sin_header(self, ilgan):
         table = {
-            "甲": ["편인", "정인", "비견", "겁재", "식신", "상관", "편재", "정재", "편관", "정관"],
-            "乙": ["정인", "편인", "겁재", "비견", "상관", "식신", "정재", "편재", "정관", "편관"],
-            "丙": ["편관", "정관", "편인", "정인", "비견", "겁재", "식신", "상관", "편재", "정재"],
-            "丁": ["정관", "편관", "정인", "편인", "겁재", "비견", "상관", "식신", "정재", "편재"],
-            "戊": ["편재", "정재", "편관", "정관", "편인", "정인", "비견", "겁재", "식신", "상관"],
-            "己": ["정재", "편재", "정관", "편관", "정인", "편인", "겁재", "비견", "상관", "식신"],
-            "庚": ["식신", "상관", "편재", "정재", "편관", "정관", "편인", "정인", "비견", "겁재"],
-            "辛": ["상관", "식신", "정재", "편재", "정관", "편관", "정인", "편인", "겁재", "비견"],
-            "壬": ["비견", "겁재", "식신", "상관", "편재", "정재", "편관", "정관", "편인", "정인"],
-            "癸": ["겁재", "비견", "상관", "식신", "정재", "편재", "정관", "편관", "정인", "편인"]
+            "甲": ["pyeon-in", "jeong-in", "bi-gyeon", "geop-jae", "ski-sin", "sang-gwan", "pyeon-jae", "jeong-jae", "pyeon-gwan", "jeong-gwan"],
+            "乙": ["jeong-in", "pyeon-in", "geop-jae", "bi-gyeon", "sang-gwan", "ski-sin", "jeong-jae", "pyeon-jae", "jeong-gwan", "pyeon-gwan"],
+            "丙": ["pyeon-gwan", "jeong-gwan", "pyeon-in", "jeong-in", "bi-gyeon", "geop-jae", "ski-sin", "sang-gwan", "pyeon-jae", "jeong-jae"],
+            "丁": ["jeong-gwan", "pyeon-gwan", "jeong-in", "pyeon-in", "geop-jae", "bi-gyeon", "sang-gwan", "ski-sin", "jeong-jae", "pyeon-jae"],
+            "戊": ["pyeon-jae", "jeong-jae", "pyeon-gwan", "jeong-gwan", "pyeon-in", "jeong-in", "bi-gyeon", "geop-jae", "ski-sin", "sang-gwan"],
+            "己": ["jeong-jae", "pyeon-jae", "jeong-gwan", "pyeon-gwan", "jeong-in", "pyeon-in", "geop-jae", "bi-gyeon", "sang-gwan", "ski-sin"],
+            "庚": ["ski-sin", "sang-gwan", "pyeon-jae", "jeong-jae", "pyeon-gwan", "jeong-gwan", "pyeon-in", "jeong-in", "bi-gyeon", "geop-jae"],
+            "辛": ["sang-gwan", "ski-sin", "jeong-jae", "pyeon-jae", "jeong-gwan", "pyeon-gwan", "jeong-in", "pyeon-in", "geop-jae", "bi-gyeon"],
+            "壬": ["bi-gyeon", "geop-jae", "ski-sin", "sang-gwan", "pyeon-jae", "jeong-jae", "pyeon-gwan", "jeong-gwan", "pyeon-in", "jeong-in"],
+            "癸": ["geop-jae", "bi-gyeon", "sang-gwan", "ski-sin", "jeong-jae", "pyeon-jae", "jeong-gwan", "pyeon-gwan", "jeong-in", "pyeon-in"]
         }
         return table[ilgan]
 
@@ -911,34 +911,34 @@ class Saju():
 
         if self.sex == 1:
             reference_luck_score = {
-                "love": (reference_score_dict["편재"] + reference_score_dict["정재"]) * (1 / 2) + (reference_score_dict["식신"] + reference_score_dict["상관"]) * (1 / 2),
-                "wealth": (reference_score_dict["편재"] + reference_score_dict["정재"]) * (1 / 2) + (
-                            reference_score_dict["식신"] + reference_score_dict["상관"]) * (1 / 2) + (reference_score_dict["편관"] + reference_score_dict["정관"]) * (1 / 2),
-                "study": (reference_score_dict["편관"] + reference_score_dict["정관"]) * (1/2) + (reference_score_dict["편인"] + reference_score_dict["정인"]) * (1/2),
-                "health": (reference_score_dict["비견"] + reference_score_dict["겁재"])
+                "love": (reference_score_dict["pyeon-jae"] + reference_score_dict["jeong-jae"]) * (1 / 2) + (reference_score_dict["ski-sin"] + reference_score_dict["sang-gwan"]) * (1 / 2),
+                "wealth": (reference_score_dict["pyeon-jae"] + reference_score_dict["jeong-jae"]) * (1 / 2) + (
+                            reference_score_dict["ski-sin"] + reference_score_dict["sang-gwan"]) * (1 / 2) + (reference_score_dict["pyeon-gwan"] + reference_score_dict["jeong-gwan"]) * (1 / 2),
+                "study": (reference_score_dict["pyeon-gwan"] + reference_score_dict["jeong-gwan"]) * (1/2) + (reference_score_dict["pyeon-in"] + reference_score_dict["jeong-in"]) * (1/2),
+                "health": (reference_score_dict["bi-gyeon"] + reference_score_dict["geop-jae"])
             }
         else:
             reference_luck_score = {
-                "love": (reference_score_dict["편재"] + reference_score_dict["정재"]) * (1/2) + (reference_score_dict["편관"] + reference_score_dict["정관"]) * (1/2) + (reference_score_dict["식신"] + reference_score_dict["상관"]) * (1/2),
-                "wealth": (reference_score_dict["편재"] + reference_score_dict["정재"]) * (1/2) + (reference_score_dict["식신"] + reference_score_dict["상관"]) * (1/2),
-                "study": (reference_score_dict["편관"] + reference_score_dict["정관"]) * (1/2) + (reference_score_dict["편인"] + reference_score_dict["정인"]) * (1/2),
-                "health": (reference_score_dict["비견"] + reference_score_dict["겁재"])
+                "love": (reference_score_dict["pyeon-jae"] + reference_score_dict["jeong-jae"]) * (1/2) + (reference_score_dict["pyeon-gwan"] + reference_score_dict["jeong-gwan"]) * (1/2) + (reference_score_dict["ski-sin"] + reference_score_dict["sang-gwan"]) * (1/2),
+                "wealth": (reference_score_dict["pyeon-jae"] + reference_score_dict["jeong-jae"]) * (1/2) + (reference_score_dict["ski-sin"] + reference_score_dict["sang-gwan"]) * (1/2),
+                "study": (reference_score_dict["pyeon-gwan"] + reference_score_dict["jeong-gwan"]) * (1/2) + (reference_score_dict["pyeon-in"] + reference_score_dict["jeong-in"]) * (1/2),
+                "health": (reference_score_dict["bi-gyeon"] + reference_score_dict["geop-jae"])
             }
 
         if self.sex == 1:
             luck_score = {
-                "love": (_10sin_score["편재"] + _10sin_score["정재"]) * (1 / 2) + (_10sin_score["식신"] + _10sin_score["상관"]) * (1 / 2),
-                "wealth": (_10sin_score["편재"] + _10sin_score["정재"]) * (1 / 2) + (
-                            _10sin_score["식신"] + _10sin_score["상관"]) * (1 / 2) + (_10sin_score["편관"] + _10sin_score["정관"]) * (1 / 2),
-                "study": (_10sin_score["편관"] + _10sin_score["정관"]) * (1/2) + (_10sin_score["편인"] + _10sin_score["정인"]) * (1/2),
-                "health": (_10sin_score["비견"] + _10sin_score["겁재"])
+                "love": (_10sin_score["pyeon-jae"] + _10sin_score["jeong-jae"]) * (1 / 2) + (_10sin_score["ski-sin"] + _10sin_score["sang-gwan"]) * (1 / 2),
+                "wealth": (_10sin_score["pyeon-jae"] + _10sin_score["jeong-jae"]) * (1 / 2) + (
+                            _10sin_score["ski-sin"] + _10sin_score["sang-gwan"]) * (1 / 2) + (_10sin_score["pyeon-gwan"] + _10sin_score["jeong-gwan"]) * (1 / 2),
+                "study": (_10sin_score["pyeon-gwan"] + _10sin_score["jeong-gwan"]) * (1/2) + (_10sin_score["pyeon-in"] + _10sin_score["jeong-in"]) * (1/2),
+                "health": (_10sin_score["bi-gyeon"] + _10sin_score["geop-jae"])
             }
         else:
             luck_score = {
-                "love": (_10sin_score["편재"] + _10sin_score["정재"]) * (1/2) + (_10sin_score["편관"] + _10sin_score["정관"]) * (1/2) + (_10sin_score["식신"] + _10sin_score["상관"]) * (1/2),
-                "wealth": (_10sin_score["편재"] + _10sin_score["정재"]) * (1/2) + (_10sin_score["식신"] + _10sin_score["상관"]) * (1/2),
-                "study": (_10sin_score["편관"] + _10sin_score["정관"]) * (1/2) + (_10sin_score["편인"] + _10sin_score["정인"]) * (1/2),
-                "health": (_10sin_score["비견"] + _10sin_score["겁재"])
+                "love": (_10sin_score["pyeon-jae"] + _10sin_score["jeong-jae"]) * (1/2) + (_10sin_score["pyeon-gwan"] + _10sin_score["jeong-gwan"]) * (1/2) + (_10sin_score["ski-sin"] + _10sin_score["sang-gwan"]) * (1/2),
+                "wealth": (_10sin_score["pyeon-jae"] + _10sin_score["jeong-jae"]) * (1/2) + (_10sin_score["ski-sin"] + _10sin_score["sang-gwan"]) * (1/2),
+                "study": (_10sin_score["pyeon-gwan"] + _10sin_score["jeong-gwan"]) * (1/2) + (_10sin_score["pyeon-in"] + _10sin_score["jeong-in"]) * (1/2),
+                "health": (_10sin_score["bi-gyeon"] + _10sin_score["geop-jae"])
             }
 
         result = {
