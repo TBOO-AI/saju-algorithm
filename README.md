@@ -88,7 +88,7 @@ curl -X GET "http://localhost:8000/api/saju/?birthdate=1990-01-01&birthtime=12:0
 ```
 
 - `character`
-    - Contains character information, representing the Day Pillar (일주) information from the Saju.
+    - Contains character information, representing the Day Pillar (日柱) information from the Saju.
 - `saju`
     - Contains information about personality traits based on your character and dominant elements.
 - `il_ju`
@@ -100,7 +100,7 @@ curl -X GET "http://localhost:8000/api/saju/?birthdate=1990-01-01&birthtime=12:0
 - `saju_score`
     - Contains Saju scores in ten categories: Sang-gwan, Sik-sin, Jeong-jae, Pyeon-jae, Jeong-gwan, Pyeon-gwan, Jeong-in, Pyeon-in, Geop-jae, and Bi-gyeon.
 - `dae_won_su`
-    - Contains your Major Number (대원수), which is determined by the combination of Heavenly Stems and Earthly Branches in your Saju.
+    - Contains your Major Number (大元數), which is determined by the combination of Heavenly Stems and Earthly Branches in your Saju.
 
 ## Running Locally
 
