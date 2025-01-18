@@ -3,7 +3,6 @@ from datetime import datetime
 from django.http import JsonResponse  # 상단에 import 추가
 import os
 import csv
-from django.http import HttpResponse
 from saju.saju_algorithm.saju_core.saju import Saju
 
 
@@ -18,8 +17,6 @@ CHARACTER_DICT = [
     { "id": 4, "element": "화", "name_ko": "딘", "name_en" : "Diin", "for_me": 5, "to_me": 1, "il_gan": ["병", "정"]},
     { "id": 5, "element": "목", "name_ko": "유피", "name_en" : "YuPEE", "for_me": 1, "to_me": 2, "il_gan": ["갑", "을"]},
 ]
-
-
 
 def index(request):
 
@@ -72,7 +69,6 @@ def character(request):
         sex=sex
     ).saju_me_action()
 
-    print(saju_dict)
     il_gan_dict = {"甲": "갑", "乙": "을", "丙": "병", "丁": "정", "戊": "무", "己": "기", "庚": "경", "辛": "신", "壬": "임",
                    "癸": "계"}
 
@@ -80,7 +76,7 @@ def character(request):
     most_oheang = [k for k, v in saju_dict["oheang_score"].items() if max(saju_dict["oheang_score"].values()) == v]
     il_gan = saju_dict["il_gan"]
     il_ju = saju_dict["il_ju"]
-    print("il_ju", il_ju)
+
     character = next(
         (char for char in CHARACTER_DICT 
         if il_gan_dict[il_gan] in char["il_gan"]),
@@ -90,7 +86,6 @@ def character(request):
     if character is None:
         return JsonResponse({"error": "일치하는 캐릭터를 찾을 수 없습니다."}, status=404)
     
-    # 캐릭터 사주를 가져온다.
     with open(oheang_saju_file_path, encoding='utf-8') as f:
         reader = csv.DictReader(f)
         rows = list(reader)
@@ -101,7 +96,6 @@ def character(request):
             None
         )
 
-    # 캐릭터 사주를 가져온다.
     with open(il_ju_saju_file_path, encoding='utf-8') as f:
         reader = csv.DictReader(f)
         rows = list(reader)
@@ -116,6 +110,7 @@ def character(request):
         return JsonResponse({"error": "일치하는 사주 데이터를 찾을 수 없습니다."}, status=404)
     
 
-    return JsonResponse({"character": character, "saju": filtered_saju, "il_ju": filtered_il_ju, "oheang_rate": oheang_rate})
+    print(saju_dict)
+    return JsonResponse({"character": character, "saju": filtered_saju, "il_ju": filtered_il_ju, "oheang_rate": oheang_rate, "luck_score": saju_dict["luck_score"], "saju_score": saju_dict["saju_score"], "dae_won_su": saju_dict["dae_won_su"]})
 
 
