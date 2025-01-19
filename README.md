@@ -58,7 +58,7 @@ curl -X GET "http://localhost:8000/api/saju/?birthdate=1990-01-01&birthtime=12:0
     "saju": { ... },
     "il_ju": { ... },
     "oheang_rate": {
-        "ground": 33.2,
+        "earth": 33.2,
         "fire": 15.9,
         "water": 6.8,
         "wood": 32.7,
@@ -94,7 +94,7 @@ curl -X GET "http://localhost:8000/api/saju/?birthdate=1990-01-01&birthtime=12:0
 - `il_ju`
     - Contains interpretation of your Day Pillar.
 - `oheang_rate`
-    - Contains the ratio of the Five Elements in your entire Saju, consisting of ground, fire, water, wood, and gold.
+    - Contains the ratio of the Five Elements in your entire Saju, consisting of earth, fire, water, wood, and gold.
 - `luck_score`
     - Contains fortune scores in four categories: love, wealth, study, and health.
 - `saju_score`

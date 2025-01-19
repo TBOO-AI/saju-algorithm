@@ -531,7 +531,7 @@ class Saju():
             "관성": round(_10sin_score["pyeon-gwan"] + _10sin_score["jeong-gwan"], 1),
         }
         _5heng_score = self.oheng_table[self.get_me_il_gan()]
-        result_mapper = {"목": "wood", "화": "fire", "토": "ground", "금": "gold", "수": "water"}
+        result_mapper = {"목": "wood", "화": "fire", "토": "earth", "금": "gold", "수": "water"}
         result = {result_mapper[value]: _6chin_score[key] for key, value in _5heng_score.items()}
 
         return result
