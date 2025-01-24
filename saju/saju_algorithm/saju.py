@@ -7,9 +7,9 @@ from datetime import datetime
 from functools import reduce
 
 module_dir = os.path.dirname(__file__)
-base_file_path = os.path.join(module_dir, '../../saju_data/10sin_{type}.csv')
-temperature_file_path = os.path.join(module_dir, '../../saju_data/saju_temperature.csv')
-humidity_file_path = os.path.join(module_dir, '../../saju_data/saju_humidity.csv')
+base_file_path = os.path.join(module_dir, '../saju_data/10sin_{type}.csv')
+temperature_file_path = os.path.join(module_dir, '../saju_data/saju_temperature.csv')
+humidity_file_path = os.path.join(module_dir, '../saju_data/saju_humidity.csv')
 
 class Saju():
     def __init__(self, in_year=0, in_month=0, in_day=0, in_hour=0, in_min=0, sex=1):

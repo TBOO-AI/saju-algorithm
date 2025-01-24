@@ -3,7 +3,8 @@ from datetime import datetime
 from django.http import JsonResponse
 import os
 import csv
-from saju.saju_algorithm.saju_core.saju import Saju
+from saju.saju_algorithm.saju import Saju
+from saju.saju_algorithm.saju_calendar import SajuCalendar
 
 
 module_dir = os.path.dirname(__file__)
@@ -107,3 +108,43 @@ def saju(request):
     })
 
 
+def saju_calendar(request):
+    print("saju_calendar")
+    birth_date = request.GET.get('birth_date')
+    birth_time = request.GET.get('birth_time')
+    gender = request.GET.get('gender')
+
+    if not all([birth_date, birth_time, gender]):
+        return JsonResponse({
+            "error": "Required parameters are missing. (birth_date, birth_time, gender)"
+        }, status=400)
+
+    if gender.lower() not in ['male', 'female']:
+        return JsonResponse({
+            "error": "Gender must be either 'male' or 'female'."
+        }, status=400)
+
+    try:
+
+        birth_datetime = datetime.strptime(f"{birth_date} {birth_time}", "%Y-%m-%d %H:%M")
+    except ValueError:
+        return JsonResponse({
+            "error": "Invalid date/time format. (YYYY-MM-DD HH:MM)"
+        }, status=400)
+
+    sex = 1 if gender.lower() == 'male' else 2
+
+    saju_dict = SajuCalendar(
+        in_year=birth_datetime.year,
+        in_month=birth_datetime.month,
+        in_day=birth_datetime.day,
+        in_hour=birth_datetime.hour,
+        in_min=birth_datetime.minute,
+        sex=sex
+    ).get()
+
+    print(saju_dict)
+    return JsonResponse({
+        "status": "success",
+        "data": saju_dict
+    })
