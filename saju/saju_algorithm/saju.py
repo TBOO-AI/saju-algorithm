@@ -626,7 +626,12 @@ class Saju():
                     ganidx = 0
 
                 out_name.append(self.caGanjiTable[ganidx])
-
+        print("out_luckyear")
+        print(out_luckyear)
+        print("out_name")
+        print(out_name)
+        print("bAscending")
+        print(bAscending)
         return out_luckyear, out_name, bAscending
 
     def get_temperature(self, idx_list):
@@ -739,6 +744,8 @@ class Saju():
     def get_dae_won(self):
         age = (int(self.now_year) - int(self.me_year)) + 1
         dae_won_su, dae_won_list, is_tour = self.getLuck()
+        print("--------------")
+        print(dae_won_list)
         dea_luck = int(dae_won_su)
         generations = [0 + dea_luck, 10 + dea_luck, 20 + dea_luck, 30 + dea_luck, 40 + dea_luck, 50 + dea_luck, 60 + dea_luck, 70 + dea_luck,
                        80 + dea_luck, 90 + dea_luck, 100+dea_luck, 110+dea_luck]
@@ -780,6 +787,7 @@ class Saju():
         return {
             "dae_won": dea_won,
             "dae_won_su": dae_won_su,
+            "dae_won_list": dae_won_list,
             "way": "순행" if is_tour else "역행",
             "age": age,
             "won_flow": sorted_dict,
@@ -790,6 +798,7 @@ class Saju():
         dae_won = self.get_dae_won()
         age = dae_won['age']
         now_year = datetime.today().strftime('%Y')
+        dae_won_list = dae_won['dae_won_list']
         dae_won_flow = dae_won['won_flow']
         age_list = list(dae_won_flow.keys())
         month_list = list(dae_won_flow.values())
@@ -802,8 +811,8 @@ class Saju():
             "age": age_list[idx],
             "year": year_list[idx],
             "month": month_list[idx],
-
-        } for idx in range(0, 12)]
+            "ganji": dae_won_list[idx]
+        } for idx in range(0, 10)]
 
         return dae_won_flow
 
