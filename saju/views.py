@@ -61,10 +61,6 @@ def saju(request):
     il_gan = saju_dict["il_gan"]
     il_ju = saju_dict["il_ju"]
 
-    print(saju_dict)
-    print(saju_dict['way'])
-    print(saju_dict['dae_won'])
-
     character = next(
         (char for char in CHARACTER_DICT 
         if il_gan_dict[il_gan] in char["il_gan"]),
@@ -103,7 +99,8 @@ def saju(request):
         "data": {
             "character": character,
             "saju": filtered_saju, 
-            "il_ju": filtered_il_ju, 
+            "il_ju": filtered_il_ju,
+            "most_oheang": most_oheang,
             "oheang_rate": oheang_rate,
             "now_dae_won": saju_dict['dae_won'],
             "dae_won_flow": saju_dict['dae_won_flow'],
